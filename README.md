@@ -1,4 +1,4 @@
-# Cards-Iguais-Pokemon
-Joguinho para separar cards do pokemon , o objetivo é  permanecer com o maior numero de cards iguais na  tela .
+# Cards Iguais Pokemon.
 
 #### Simples joguinho feito para testar requisição AJAX com  XMLHttpRequest
+![alt text](https://github.com/AndreLuisCelis/Cards-Iguais-Pokemon/blob/master/assets/imgs/img-demons.png)
