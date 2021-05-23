@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cards Iguais Pokemon</title>
+</head>
+
+<body>
+    <header>
+        <h1>
+            Cards Iguais Pokemon
+        </h1>
+    </header>
+    <main>
+        <button onclick="addCard()"> add Card</button>
+        <button onclick="removeCard()"> remove card</button>
+	<p> O objetivo do jogo e deixar o maior numero de cards iguais no painel
+                , adicionando e removendo , Boa Sorte!</p>
+        <section id='cards'>
+         
+        </section>
+    </main>
+</body>
+<script type="text/javascript">
+    let x = 0;
+    let iguais = [];
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET", "https://api.pokemontcg.io/v2/cards");
+    xhr.send();
+    function addCard() {
+        if (x < 0) x = 3;
+
+        if (xhr.response) {
+            let dados = JSON.parse(xhr.response);
+            let dodosCardsPokemon = dados.data;
+
+            let card = document.createElement('div');
+            card.className = 'card';
+
+            let title = document.createElement('h1');
+            title.textContent = dodosCardsPokemon[x].name;
+
+            let imagem = document.createElement('img');
+            imagem.src = dodosCardsPokemon[x].images.small;
+
+            card.appendChild(title);
+            card.appendChild(imagem);
+            document.getElementById('cards').appendChild(card);
+            x++;
+            verificaWin();
+        }
+
+    }
+
+    function removeCard() {
+        let card = document.getElementsByClassName('card');
+        if (card.length) {
+            let cards = document.getElementById('cards').removeChild(card[0]);
+        }
+        x -= 2;
+        verificaWin();
+    }
+
+    function verificaWin() {
+        let cards = document.querySelectorAll('.card');
+        cards.forEach((card, indice, cards) => {
+            if (cards[indice + 1] && card) {
+                if (card.childNodes[0].innerText == cards[indice + 1].childNodes[0].innerText) {
+                    iguais.push('igual');
+                }
+            }
+        })
+        if (iguais.length + 1 == cards.length && cards.length > 1) {
+            console.log('você conseguiu parabens , cards Iguais :', iguais.length + 1);
+            setTimeout(() => {
+                alert(`você conseguiu parabens , ${iguais.length + 1} cards Iguais `);
+                document.location.reload(true);
+            }, 900);
+        } else {
+            iguais = [];
+        }
+    }
+</script>
+<style>
+    #cards {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    #cards h1 {
+        text-align: center;
+    }
+    .card {
+        max-width: 15%;
+        margin: 5px;
+        padding: 5px;
+        background-color: #eee;
+        border-radius: 15px;
+    }
+    .card img {
+        width: 100%;
+    }
+     button{
+	font-weight: bold;
+	font-size: 20px;
+	padding:20px 40px;
+	color: white;
+	background-color: blue;
+	border-radius: 10px;
+}
+</style>
+
+</html>
