@@ -10,6 +10,10 @@ a lógica e aplicar conseitos de requisção AJAX utilizando XMLHttpRequest cons
  let xhr = new XMLHttpRequest();
     xhr.open("GET", "https://api.pokemontcg.io/v2/cards");
     xhr.send();
+    
+    if (xhr.response) {
+            let dados = JSON.parse(xhr.response);
+            let dodosCardsPokemon = dados.data;
 ```
 
 
